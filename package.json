@@ -1,0 +1,9 @@
+{
+  "name": "vershina-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Сайт турфирмы «Вершина» — статика + одна serverless-функция для заявок",
+  "engines": {
+    "node": ">=18"
+  }
+}
