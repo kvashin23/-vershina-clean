@@ -180,14 +180,58 @@ const tours = [
   {
     slug:'melich-factory', icon:'factory', category:'kmv',
     title:'Фабрика меха и кожи «Melich»',
-    city:'Кисловодск', days:['пн','вт','ср','чт','пт','сб','вс'], time:'14:30', duration:'—',
+    city:'Кисловодск', days:['пн','вт','ср','чт','пт','сб','вс'], time:'14:30 (в воскресенье — 10:00)', duration:'—',
     priceAdult:'по запросу', priceChild:'по запросу',
-    short:'Посещение одной из крупнейших меховых и кожевенных фабрик юга России.',
-    detail:'Экскурсия на фабрику «Melich» — одно из крупнейших предприятий по производству меховых и кожаных изделий на юге России, с возможностью приобрести продукцию напрямую от производителя.',
+    short:'Приглашаем на фабрику меха и кожи «Melich» — интеллектуальная роскошь на юге России.',
+    detail:'«Melich» — одно из самых крупных предприятий по производству меха и кожи на юге России. Вас пригласят на фабрику, а с выбором поможет приветливый персонал. Приглашение действует каждый день: в 14:30, а по воскресеньям — в 10:00. Условия посещения уточняйте у диспетчера.',
     sights:['Производство и магазин фабрики «Melich»'],
     notIncluded:'',
   },
 ];
+
+// Фотографии экскурсий (папка images/). Первая фотография — обложка карточки.
+const PHOTOS = {
+  'kislovodsk-obzornaya': [['kislovodsk-2','Кисловодская крепость'],['kislovodsk-1','Кисловодск'],['zamok-1','Замок Коварства и Любви'],['koltso-1','Гора Кольцо']],
+  'medovye-vodopady': [['medovye-1','Медовые водопады'],['medovye-2','Медовые водопады'],['medovye-3','Медовые водопады'],['koltso-1','Гора Кольцо']],
+  'dombai': [['dombai-1','Горные вершины Домбая'],['dombai-2','Домбай'],['dombai-3','Домбай'],['dombai-4','Горное озеро в Домбае']],
+  'pyatigorsk': [['pyatigorsk-3','Эолова арфа'],['pyatigorsk-1','Скульптура «Орёл»'],['pyatigorsk-2','Парк «Цветник»'],['pyatigorsk-4','Озеро Провал'],['pyatigorsk-5','Панорама Пятигорска']],
+  'kbr-vodopady-goluboe-ozero': [['chegem-1','Голубое озеро'],['chegem-3','Чегемские водопады'],['chegem-2','Чегемское ущелье'],['chegem-5','Озеро'],['chegem-6','Лебедь на озере'],['chegem-4','Чегемские водопады'],['chegem-7','Замёрзший водопад'],['chegem-8','Водопад'],['chegem-9','Голубое озеро']],
+  'zheleznovodsk-essentuki': [['zheleznovodsk-1','Железноводск, Пушкинская галерея'],['zheleznovodsk-2','Железноводск, Эмирский дворец'],['zheleznovodsk-3','Железноводск'],['essentuki-1','Ессентуки'],['essentuki-2','Ессентуки'],['essentuki-3','Ессентуки']],
+  'elbrus-cheget': [['elbrus-1','Приэльбрусье'],['elbrus-2','Эльбрус'],['elbrus-3','Приэльбрусье'],['elbrus-4','Эльбрус'],['elbrus-5','Ратрак на склоне Эльбруса']],
+  'arkhyz': [['arkhyz-1','Архыз, древний храм'],['arkhyz-2','Архыз, древний храм'],['arkhyz-3','Архыз, обсерватория'],['arkhyz-4','Горы Архыза']]
+};
+tours.forEach(t => {
+  t.photos = (PHOTOS[t.slug] || []).map(([f, alt]) => ({ src: 'images/' + f + '.jpg', alt: alt }));
+});
+// Экскурсии с фотографиями — первыми (порядок внутри групп сохраняется)
+tours.sort((a, b) => (b.photos.length ? 1 : 0) - (a.photos.length ? 1 : 0));
+
+// Просмотр фотографий на весь экран
+function initLightbox(container, photos){
+  let box = document.getElementById('lightbox');
+  if (!box){
+    box = document.createElement('div');
+    box.id = 'lightbox';
+    box.className = 'lightbox';
+    box.innerHTML = '<button class="lb-close" aria-label="Закрыть">×</button><button class="lb-prev" aria-label="Назад">‹</button><img alt=""><button class="lb-next" aria-label="Вперёд">›</button>';
+    document.body.appendChild(box);
+  }
+  const img = box.querySelector('img');
+  let idx = 0;
+  const show = (i) => { idx = (i + photos.length) % photos.length; img.src = photos[idx].src; img.alt = photos[idx].alt; box.classList.add('open'); };
+  const hide = () => box.classList.remove('open');
+  container.querySelectorAll('.exc-photo').forEach(b => b.addEventListener('click', () => show(parseInt(b.dataset.i, 10))));
+  box.querySelector('.lb-close').onclick = hide;
+  box.querySelector('.lb-prev').onclick = (e) => { e.stopPropagation(); show(idx - 1); };
+  box.querySelector('.lb-next').onclick = (e) => { e.stopPropagation(); show(idx + 1); };
+  box.onclick = (e) => { if (e.target === box) hide(); };
+  document.addEventListener('keydown', (e) => {
+    if (!box.classList.contains('open')) return;
+    if (e.key === 'Escape') hide();
+    if (e.key === 'ArrowLeft') show(idx - 1);
+    if (e.key === 'ArrowRight') show(idx + 1);
+  });
+}
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -216,16 +260,20 @@ document.addEventListener('DOMContentLoaded', () => {
       const daysHtml = (t.days && t.days.length)
         ? t.days.map(d => `<span>${DAY_LABELS[d]||d}</span>`).join('')
         : `<span class="muted">По запросу</span>`;
+      const cover = t.photos && t.photos[0];
       card.innerHTML = `
-        <div class="route-icon">${icon(t.icon)}</div>
-        <h3>${t.title}</h3>
-        <p class="route-short">${t.short}</p>
-        <div class="route-meta">
-          <div class="route-price">${priceLabel(t)}<span>взрослый</span></div>
-          <div class="route-duration">${t.duration}</div>
+        ${cover ? `<div class="route-photo"><img src="${cover.src}" alt="${cover.alt}" loading="lazy"></div>` : ''}
+        <div class="route-body">
+          ${cover ? '' : `<div class="route-icon">${icon(t.icon)}</div>`}
+          <h3>${t.title}</h3>
+          <p class="route-short">${t.short}</p>
+          <div class="route-meta">
+            <div class="route-price">${priceLabel(t)}<span>взрослый</span></div>
+            <div class="route-duration">${t.duration}</div>
+          </div>
+          <div class="route-days">${daysHtml}</div>
+          <span class="route-link">Подробнее →</span>
         </div>
-        <div class="route-days">${daysHtml}</div>
-        <span class="route-link">Подробнее →</span>
       `;
       card.style.cursor = 'pointer';
       card.addEventListener('click', () => {
@@ -311,6 +359,16 @@ document.addEventListener('DOMContentLoaded', () => {
         <span class="exc-meta-pill">${icon('clock')}${t.duration}</span>
         <span class="exc-meta-pill">${icon('people')}${(t.days&&t.days.length) ? t.days.map(d=>DAY_LABELS[d]).join(', ') : 'По запросу'}</span>
       `;
+    }
+
+    const gal = document.querySelector('.exc-gallery');
+    if (gal){
+      if (t.photos && t.photos.length){
+        gal.innerHTML = t.photos.map((p, i) => `<button type="button" class="exc-photo${i===0?' big':''}" data-i="${i}"><img src="${p.src}" alt="${p.alt}" loading="${i<3?'eager':'lazy'}"></button>`).join('');
+        initLightbox(gal, t.photos);
+      } else {
+        gal.closest('.exc-section').style.display = 'none';
+      }
     }
 
     const sightsList = document.querySelector('.exc-sights');
