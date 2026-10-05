@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Экскурсия — Вершина, Кисловодск</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site">
+  <div class="header-inner">
+    <a class="logo" href="index.html"><span class="logo-mark">В</span>Вершина</a>
+    <nav class="main-nav">
+      <a href="excursions.html">Экскурсии</a>
+      <a href="about.html">О нас</a>
+      <a href="index.html#request">Заявка</a>
+      <a href="contacts.html">Контакты</a>
+    </nav>
+    <div class="header-right">
+      <a class="phone-link" href="tel:+79283045400">+7 (928) 304-54-00<span>Кисловодск, Вокзальная 1</span></a>
+      <a class="btn btn-primary" href="tel:+79283045400">Позвонить</a>
+    </div>
+  </div>
+</header>
+
+<div id="exc-root">
+
+<section class="exc-hero">
+  <div class="wrap">
+    <div class="breadcrumb"><a href="index.html">Главная</a> / <a href="excursions.html">Экскурсии</a> / <span class="exc-title">Экскурсия</span></div>
+    <div class="eyebrow">Экскурсия «Вершины»</div>
+    <h1 class="exc-title">Экскурсия</h1>
+    <p class="exc-short">Описание загружается…</p>
+    <div class="exc-meta-row"></div>
+  </div>
+</section>
+
+<section class="exc-body">
+  <div class="wrap exc-layout">
+    <div>
+      <a class="exc-back" href="excursions.html">← Все экскурсии</a>
+
+      <div class="exc-section">
+        <h2>Подробнее о маршруте</h2>
+        <p class="exc-detail">Описание загружается…</p>
+      </div>
+
+      <div class="exc-section">
+        <h2>Что увидят туристы</h2>
+        <ul class="exc-list sights exc-sights"></ul>
+      </div>
+
+      <div class="exc-section">
+        <h2>Включено в стоимость</h2>
+        <ul class="exc-list included exc-included"></ul>
+      </div>
+
+      <div class="exc-section">
+        <h2>Не включено в стоимость</h2>
+        <div class="exc-note exc-not-included"></div>
+      </div>
+
+      <div class="exc-section">
+        <h2>Что взять с собой</h2>
+        <p class="exc-packing"></p>
+      </div>
+
+      <div class="exc-section">
+        <h2>Правила безопасности</h2>
+        <p class="exc-safety"></p>
+      </div>
+    </div>
+
+    <aside class="exc-sidebar">
+      <div class="exc-price-row">
+        <span class="lbl">Взрослый</span>
+        <span class="val exc-price-adult">—</span>
+      </div>
+      <div class="exc-price-row">
+        <span class="lbl">Детский</span>
+        <span class="val exc-price-child">—</span>
+      </div>
+      <div class="exc-price-row">
+        <span class="lbl">Длительность</span>
+        <span class="val exc-price-duration" style="font-size:14px;">—</span>
+      </div>
+      <div class="exc-days-mini"></div>
+      <button class="btn btn-gold exc-book-btn" type="button">Оставить заявку</button>
+      <a class="phone-link" href="tel:+79283045400" style="display:block;margin-top:14px;text-align:center;">+7 (928) 304-54-00</a>
+    </aside>
+  </div>
+</section>
+
+</div>
+
+<section class="request" id="request">
+  <div class="wrap request-grid">
+    <div class="request-copy">
+      <div class="eyebrow">Заявка на экскурсию</div>
+      <h2>Оставьте заявку — перезвоним в течение 15 минут</h2>
+      <p>Расскажем про свободные места, время отправления и заберём с ближайшей к вам остановки по Кисловодску.</p>
+      <ul class="request-points">
+        <li>Бесплатная доставка билетов по Кисловодску</li>
+        <li>Скидки для детей</li>
+        <li>Замена маршрута при форс-мажоре — без потери программы</li>
+      </ul>
+      <a class="phone-link" href="tel:+79283045400" style="margin-top:22px;">+7 (928) 304-54-00<span>Ежедневно, с 8:00 до 20:00</span></a>
+    </div>
+    <form class="request-form" id="request-form">
+      <div class="f-row">
+        <label>Ваше имя
+          <input type="text" name="name" placeholder="Как к вам обращаться" required>
+        </label>
+      </div>
+      <div class="f-row">
+        <label>Телефон
+          <input type="tel" name="phone" placeholder="+7 (___) ___-__-__" required>
+        </label>
+      </div>
+      <div class="f-row">
+        <label>Экскурсия
+          <select name="route" class="request-route-select">
+            <option value="">Выберите маршрут</option>
+          </select>
+        </label>
+      </div>
+      <div class="f-row two">
+        <label>Дата поездки
+          <input type="date" name="date">
+        </label>
+        <label>Кол-во человек
+          <input type="number" name="people" min="1" value="2">
+        </label>
+      </div>
+      <div class="f-row">
+        <label>Комментарий
+          <textarea name="comment" rows="2" placeholder="Например: нужен детский тариф"></textarea>
+        </label>
+      </div>
+      <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center;">Отправить заявку</button>
+      <p class="f-note">Нажимая на кнопку, вы соглашаетесь с политикой конфиденциальности.</p>
+      <p class="f-error">Не удалось отправить заявку. Позвоните нам, пожалуйста: <a href="tel:+79283045400">+7 (928) 304-54-00</a></p>
+      <div class="f-success">
+        <div class="f-success-icon">✓</div>
+        <h3>Заявка принята</h3>
+        <p>Мы перезвоним вам в ближайшее время. Если срочно — звоните сами: <a href="tel:+79283045400">+7 (928) 304-54-00</a></p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<footer id="contacts-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><span class="logo-mark">В</span>Вершина</div>
+        <p>Экскурсии по Кавказским Минеральным Водам и Северному Кавказу из Кисловодска.</p>
+      </div>
+      <div>
+        <h4>Контакты</h4>
+        <a href="tel:+79283045400">+7 (928) 304-54-00</a>
+        <a href="contacts.html">Вокзальная ул., 1, Кисловодск</a>
+        <a href="https://www.vershina-tur.ru">vershina-tur.ru</a>
+      </div>
+      <div>
+        <h4>Компания</h4>
+        <a href="excursions.html">Экскурсии</a>
+        <a href="about.html">О нас</a>
+        <a href="contacts.html">Контакты</a>
+      </div>
+      <div>
+        <h4>Мы в сети</h4>
+        <a href="#">ВКонтакте</a>
+        <a href="#">Яндекс Карты</a>
+        <a href="#">МАКС</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© Вершина. Официальный сайт. ИНН 2628053696 · ОГРН 1092628000706</span>
+      <span>Политика конфиденциальности · Публичная оферта</span>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
